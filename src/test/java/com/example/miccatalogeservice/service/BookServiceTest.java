@@ -29,7 +29,7 @@ class BookServiceTest {
 
     @BeforeEach
     public void setUp() {
-        book = new Book(
+        book = Book.of(
                 "1234567890",
                 "Test Book",
                 "Test Author",
@@ -40,30 +40,30 @@ class BookServiceTest {
     @Test
     public void testFindByIsbn_BookFound() throws BookNotFoundException {
         // Arrange
-        when(bookRepository.findBookByIsbn("1234567890")).thenReturn(Optional.of(book));
+        when(bookRepository.findByIsbn("1234567890")).thenReturn(Optional.of(book));
 
         // Act
         Book foundBook = bookService.findByIsbn("1234567890");
 
         // Assert
         assertNotNull(foundBook);
-        assertEquals("1234567890", foundBook.isbn());
-        assertEquals("Test Book", foundBook.title());
-        assertEquals("Test Author", foundBook.author());
-        assertEquals(29.99, foundBook.price());
-        verify(bookRepository, times(1)).findBookByIsbn("1234567890");
+        assertEquals("1234567890", foundBook.getIsbn());
+        assertEquals("Test Book", foundBook.getTitle());
+        assertEquals("Test Author", foundBook.getAuthor());
+        assertEquals(29.99, foundBook.getPrice());
+        verify(bookRepository, times(1)).findByIsbn("1234567890");
     }
 
     @Test
     public void testFindByIsbn_BookNotFound() {
         // Arrange
-        when(bookRepository.findBookByIsbn("1234567890")).thenReturn(Optional.empty());
+        when(bookRepository.findByIsbn("1234567890")).thenReturn(Optional.empty());
 
         // Act & Assert
         assertThrows(BookNotFoundException.class, () -> {
             bookService.findByIsbn("1234567890");
         });
-        verify(bookRepository, times(1)).findBookByIsbn("1234567890");
+        verify(bookRepository, times(1)).findByIsbn("1234567890");
     }
 
 }

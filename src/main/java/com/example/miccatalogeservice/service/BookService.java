@@ -16,24 +16,24 @@ public class BookService {
     private final BookRepository bookRepository;
 
     public List<Book> findAllBooks() {
-        return bookRepository.findAllBooks();
+        return bookRepository.findAll();
     }
 
     public Book findByIsbn(String isbn) throws BookNotFoundException {
-        return bookRepository.findBookByIsbn(isbn).orElseThrow(BookNotFoundException::new);
+        return bookRepository.findByIsbn(isbn).orElseThrow(BookNotFoundException::new);
     }
 
     public Book addBook(Book book) throws BookAlreadyExistsException {
-        if (bookRepository.findBookByIsbn(book.isbn()).isPresent()) {
+        if (bookRepository.findByIsbn(book.getIsbn()).isPresent()) {
             throw new BookAlreadyExistsException();
         }
-        return bookRepository.addBook(book);
+        return bookRepository.save(book);
     }
 
     public void deleteBookByIsbn(String isbn) throws BookNotFoundException {
-        if (bookRepository.findBookByIsbn(isbn).isEmpty()) {
+        if (bookRepository.findByIsbn(isbn).isEmpty()) {
             throw new BookNotFoundException();
         }
-        bookRepository.deleteBookByIsbn(isbn);
+        bookRepository.deleteByIsbn(isbn);
     }
 }
