@@ -1,0 +1,13 @@
+spring:
+  application:
+    name:
+      mic-cataloge-service
+
+
+server:
+  port: 9001
+  tomcat:
+    connection-timeout: 2
+    keep-alive-timeout: 15
+    threads:
+      max: 50
