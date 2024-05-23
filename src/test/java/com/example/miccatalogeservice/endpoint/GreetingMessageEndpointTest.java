@@ -23,6 +23,6 @@ class GreetingMessageEndpointTest {
     void getGreetingMessage() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Hello from Application"));
+                .andExpect(content().string("Hello from config YML"));
     }
 }
