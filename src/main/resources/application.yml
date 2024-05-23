@@ -4,6 +4,11 @@ spring:
       mic-cataloge-service
   profiles:
     active: testdata
+  config:
+    import: "optional:configserver:"
+  cloud:
+    config:
+      uri: http://localhost:8888
 
 
 server:
@@ -17,3 +22,8 @@ server:
 bookshop:
   greeting: "Hello from config YML"
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
