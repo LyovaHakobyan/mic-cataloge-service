@@ -1,5 +1,10 @@
 name: Commit Stage
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: LyovaHakobyan/mic-cataloge-service
+  VERSION: latest
+
 on: push
 jobs:
   build:
@@ -22,3 +27,28 @@ jobs:
         run: chmod +x ./gradlew  # Добавляем шаг для изменения прав доступа
       - name: Build Gradle
         run: ./gradlew build
+    package:
+      needs: [ build ]
+      name: Package and Publish
+      runs-on: ubuntu-22.04
+      permissions:
+        contents: read
+        packages: write
+        security-events: write
+      steps:
+        - name: Checkout source code
+          uses: actions/checkout@v3  # Используем последнюю доступную версию v3
+        - name: Set up JDK
+          uses: actions/setup-java@v3  # Используем последнюю доступную версию v3
+          with:
+            distribution: temurin
+            java-version: 17
+            cache: gradle
+        - name: Build container image
+          run: |
+            chmod +x gradlew
+            ./gradlew bootBuildImage \
+            --imageName ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+        - name: Publish container image
+          run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+            
