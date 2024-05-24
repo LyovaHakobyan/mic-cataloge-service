@@ -2,8 +2,9 @@ name: Commit Stage
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: LyovaHakobyan/mic-cataloge-service
+  IMAGE_NAME: lyovahakobyan/mic-cataloge-service
   VERSION: latest
+
 
 on: push
 jobs:
