@@ -11,8 +11,8 @@ public class DataClearConfig {
 
     private final BookRepository bookRepository;
 
-//    @PreDestroy
-//    public void clearDatabase() {
-//        bookRepository.deleteAll();
-//    }
+    @PreDestroy
+    public void clearDatabase() {
+        bookRepository.deleteAll();
+    }
 }
