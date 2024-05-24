@@ -16,13 +16,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class GreetingMessageEndpointTest {
 
-//    @Autowired
-//    private MockMvc mockMvc;
-//
-//    @Test
-//    void getGreetingMessage() throws Exception {
-//        mockMvc.perform(get("/"))
-//                .andExpect(status().isOk())
-//                .andExpect(content().string("Hello from config YML"));
-//    }
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Test
+    void getGreetingMessage() throws Exception {
+        mockMvc.perform(get("/"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Hello from config YML"));
+    }
 }
